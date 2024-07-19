@@ -1,0 +1,7 @@
+{
+    "trisolv_native": 0.009889614000712754,
+    "trisolv_wasmer": 0.08219570999972348,
+    "trisolv_wasmtime": 0.01365549499860208,
+    "trisolv_wavm": 0.2362197999991622,
+    "trisolv_iwasm": 0.07623860800049442
+}

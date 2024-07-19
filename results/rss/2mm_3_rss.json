@@ -1,0 +1,36 @@
+{
+    "native": {
+        "sum_rss": 1051912.0,
+        "avg_rss": 35063.73333333333,
+        "max_rss": 37640.0,
+        "total_time": 1.4562628269195557,
+        "rss_per_time": 722336.641816998,
+        "avg_rss_per_time": 24077.888060566598
+    },
+    "wasm": {
+        "wasmer": {
+            "sum_rss": 2489292.0,
+            "avg_rss": 69147.0,
+            "max_rss": 75832.0,
+            "total_time": 1.7583520412445068,
+            "rss_per_time": 1415696.0276499332,
+            "avg_rss_per_time": 39324.88965694259
+        },
+        "wasmtime": {
+            "sum_rss": 1665676.0,
+            "avg_rss": 52052.375,
+            "max_rss": 55100.0,
+            "total_time": 1.558631420135498,
+            "rss_per_time": 1068678.5717788213,
+            "avg_rss_per_time": 33396.205368088165
+        },
+        "iwasm": {
+            "sum_rss": 6516196.0,
+            "avg_rss": 94437.62318840579,
+            "max_rss": 98284.0,
+            "total_time": 3.4124345779418945,
+            "rss_per_time": 1909544.5937984968,
+            "avg_rss_per_time": 27674.559330412998
+        }
+    }
+}

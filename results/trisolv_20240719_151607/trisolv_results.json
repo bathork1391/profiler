@@ -1,0 +1,686 @@
+{
+    "application": "trisolv",
+    "profiling_results": {
+        "optimization_level_0": {
+            "compile.py_local": {
+                "trisolv_native": 0.09970695800075191,
+                "trisolv_wasm": 0.047136716999375494
+            },
+            "times.py_local": {
+                "trisolv_native": 0.021360050999646774,
+                "trisolv_wasmer": 0.1928667600004701,
+                "trisolv_wasmtime": 0.028154147999885026,
+                "trisolv_wavm": 0.25591866399918217,
+                "trisolv_iwasm": 0.08722627899987856
+            },
+            "rapl.py_local": {
+                "native": {
+                    "file": "trisolv_0_native",
+                    "average_energy_uJ": 328978.5,
+                    "average_power_W": 14.718351545950036
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 853574.5,
+                        "average_power_W": 16.09905885164601
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 281096.5,
+                        "average_power_W": 16.13750329370833
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 4722613.5,
+                        "average_power_W": 18.918082288748252
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 2355585.0,
+                        "average_power_W": 18.68127823920821
+                    }
+                }
+            },
+            "rss.py_local": {
+                "native": {
+                    "sum_rss": 1152.0,
+                    "avg_rss": 1152.0,
+                    "max_rss": 1152.0,
+                    "total_time": 0.0006685256958007812,
+                    "rss_per_time": 1723194.796005706,
+                    "avg_rss_per_time": 1723194.796005706
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 152260.0,
+                        "avg_rss": 38065.0,
+                        "max_rss": 65260.0,
+                        "total_time": 0.1521470546722412,
+                        "rss_per_time": 1000742.3431758315,
+                        "avg_rss_per_time": 250185.58579395787
+                    },
+                    "wasmtime": {
+                        "sum_rss": 512.0,
+                        "avg_rss": 512.0,
+                        "max_rss": 512.0,
+                        "total_time": 0.001028299331665039,
+                        "rss_per_time": 497909.494087642,
+                        "avg_rss_per_time": 497909.494087642
+                    },
+                    "wavm": {
+                        "sum_rss": 130636.0,
+                        "avg_rss": 26127.2,
+                        "max_rss": 37700.0,
+                        "total_time": 0.2020413875579834,
+                        "rss_per_time": 646580.3941408246,
+                        "avg_rss_per_time": 129316.07882816493
+                    },
+                    "iwasm": {
+                        "sum_rss": 51392.0,
+                        "avg_rss": 25696.0,
+                        "max_rss": 50752.0,
+                        "total_time": 0.050913333892822266,
+                        "rss_per_time": 1009401.5863935639,
+                        "avg_rss_per_time": 504700.79319678195
+                    }
+                }
+            },
+            "doc_times.py_local": [
+                {
+                    "binary": "trisolv_0.wasm (wasmer)",
+                    "internal_time": 0.19,
+                    "external_time": 0.6527371406555176
+                },
+                {
+                    "binary": "trisolv_0.wasm (wasmtime)",
+                    "internal_time": 0.034,
+                    "external_time": 0.44304370880126953
+                },
+                {
+                    "binary": "trisolv_0.wasm (wavm)",
+                    "internal_time": 0.25,
+                    "external_time": 0.6396229267120361
+                },
+                {
+                    "binary": "trisolv_0.wasm (iwasm)",
+                    "internal_time": 0.082,
+                    "external_time": 0.5025007724761963
+                },
+                {
+                    "binary": "trisolv_0_native (native)",
+                    "internal_time": 0.021,
+                    "external_time": 0.460782527923584
+                }
+            ],
+            "doc_rapl.py_local": {
+                "native": {
+                    "average_energy_uJ": 3235770.5,
+                    "average_power_W": 7.720911764465685
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 4243855.0,
+                        "average_power_W": 8.743946498076237
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 3704855.0,
+                        "average_power_W": 8.148037999714688
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 7749980.0,
+                        "average_power_W": 11.02185241071614
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 5262712.5,
+                        "average_power_W": 9.520091946280068
+                    }
+                }
+            },
+            "doc_rss.py_local": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 158192,
+                        "avg_rss": 39548.0,
+                        "max_rss": 75760,
+                        "total_time": 0.20970392227172852,
+                        "rss_rate": 754358.8040047205,
+                        "avg_rss_rate": 188589.70100118013
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2816,
+                        "avg_rss": 2816.0,
+                        "max_rss": 2816,
+                        "total_time": 0.052880048751831055,
+                        "rss_rate": 53252.59840844023,
+                        "avg_rss_rate": 53252.59840844023
+                    },
+                    "wavm": {
+                        "sum_rss": 144016,
+                        "avg_rss": 28803.2,
+                        "max_rss": 40880,
+                        "total_time": 0.26085376739501953,
+                        "rss_rate": 552094.7672644182,
+                        "avg_rss_rate": 110418.95345288365
+                    },
+                    "iwasm": {
+                        "sum_rss": 51876,
+                        "avg_rss": 25938.0,
+                        "max_rss": 50340,
+                        "total_time": 0.10490894317626953,
+                        "rss_rate": 494485.96496522886,
+                        "avg_rss_rate": 247242.98248261443
+                    }
+                }
+            }
+        },
+        "optimization_level_1": {
+            "compile.py_local": {
+                "trisolv_native": 0.10618042799978866,
+                "trisolv_wasm": 0.0955646060010622
+            },
+            "times.py_local": {
+                "trisolv_native": 0.010602047999782371,
+                "trisolv_wasmer": 0.12035139399995387,
+                "trisolv_wasmtime": 0.014278104001277825,
+                "trisolv_wavm": 0.24787360899972555,
+                "trisolv_iwasm": 0.07847389400012617
+            },
+            "rapl.py_local": {
+                "native": {
+                    "file": "trisolv_1_native",
+                    "average_energy_uJ": 188964.5,
+                    "average_power_W": 16.654529794564752
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 804136.0,
+                        "average_power_W": 15.918043724465788
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 218475.0,
+                        "average_power_W": 15.791398113354004
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 4621234.5,
+                        "average_power_W": 18.716329346927814
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 1814387.5,
+                        "average_power_W": 18.442812964367548
+                    }
+                }
+            },
+            "rss.py_local": {
+                "native": {
+                    "sum_rss": 1152.0,
+                    "avg_rss": 1152.0,
+                    "max_rss": 1152.0,
+                    "total_time": 0.0006859302520751953,
+                    "rss_per_time": 1679471.0490093848,
+                    "avg_rss_per_time": 1679471.0490093848
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 94464.0,
+                        "avg_rss": 31488.0,
+                        "max_rss": 54912.0,
+                        "total_time": 0.10207200050354004,
+                        "rss_per_time": 925464.3735205701,
+                        "avg_rss_per_time": 308488.1245068567
+                    },
+                    "wasmtime": {
+                        "sum_rss": 512.0,
+                        "avg_rss": 512.0,
+                        "max_rss": 512.0,
+                        "total_time": 0.0007152557373046875,
+                        "rss_per_time": 715827.8826666666,
+                        "avg_rss_per_time": 715827.8826666666
+                    },
+                    "wavm": {
+                        "sum_rss": 161148.0,
+                        "avg_rss": 26858.0,
+                        "max_rss": 39220.0,
+                        "total_time": 0.25294947624206543,
+                        "rss_per_time": 637075.8397846452,
+                        "avg_rss_per_time": 106179.3066307742
+                    },
+                    "iwasm": {
+                        "sum_rss": 49796.0,
+                        "avg_rss": 24898.0,
+                        "max_rss": 49412.0,
+                        "total_time": 0.051424264907836914,
+                        "rss_per_time": 968336.6420355233,
+                        "avg_rss_per_time": 484168.32101776166
+                    }
+                }
+            },
+            "doc_times.py_local": [
+                {
+                    "binary": "trisolv_1.wasm (wasmer)",
+                    "internal_time": 0.135,
+                    "external_time": 0.49544572830200195
+                },
+                {
+                    "binary": "trisolv_1.wasm (wasmtime)",
+                    "internal_time": 0.028,
+                    "external_time": 0.41724729537963867
+                },
+                {
+                    "binary": "trisolv_1.wasm (wavm)",
+                    "internal_time": 0.247,
+                    "external_time": 0.6178605556488037
+                },
+                {
+                    "binary": "trisolv_1.wasm (iwasm)",
+                    "internal_time": 0.078,
+                    "external_time": 0.510901927947998
+                },
+                {
+                    "binary": "trisolv_1_native (native)",
+                    "internal_time": 0.011,
+                    "external_time": 0.4764440059661865
+                }
+            ],
+            "doc_rapl.py_local": {
+                "native": {
+                    "average_energy_uJ": 3146018.5,
+                    "average_power_W": 7.763325487359263
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 4123219.5,
+                        "average_power_W": 8.290765676188306
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 3653250.0,
+                        "average_power_W": 8.185719900680356
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 7719340.5,
+                        "average_power_W": 11.711293632383612
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 4740985.5,
+                        "average_power_W": 9.386910274859735
+                    }
+                }
+            },
+            "doc_rss.py_local": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 108488,
+                        "avg_rss": 36162.666666666664,
+                        "max_rss": 59848,
+                        "total_time": 0.25103092193603516,
+                        "rss_rate": 432169.8664184633,
+                        "avg_rss_rate": 144056.62213948776
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2560,
+                        "avg_rss": 2560.0,
+                        "max_rss": 2560,
+                        "total_time": 0.053900957107543945,
+                        "rss_rate": 47494.518416291794,
+                        "avg_rss_rate": 47494.518416291794
+                    },
+                    "wavm": {
+                        "sum_rss": 141624,
+                        "avg_rss": 28324.8,
+                        "max_rss": 40424,
+                        "total_time": 0.26071977615356445,
+                        "rss_rate": 543203.903015716,
+                        "avg_rss_rate": 108640.78060314318
+                    },
+                    "iwasm": {
+                        "sum_rss": 51176,
+                        "avg_rss": 25588.0,
+                        "max_rss": 49512,
+                        "total_time": 0.10492396354675293,
+                        "rss_rate": 487743.6790423625,
+                        "avg_rss_rate": 243871.83952118125
+                    }
+                }
+            }
+        },
+        "optimization_level_2": {
+            "compile.py_local": {
+                "trisolv_native": 0.11451852800018969,
+                "trisolv_wasm": 0.17336538699964876
+            },
+            "times.py_local": {
+                "trisolv_native": 0.00959795699964161,
+                "trisolv_wasmer": 0.15471698100009235,
+                "trisolv_wasmtime": 0.013808613999572117,
+                "trisolv_wavm": 0.23903855800017482,
+                "trisolv_iwasm": 0.07538045799992688
+            },
+            "rapl.py_local": {
+                "native": {
+                    "file": "trisolv_2_native",
+                    "average_energy_uJ": 207580.0,
+                    "average_power_W": 17.4889502736359
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 770658.0,
+                        "average_power_W": 16.498453309157448
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 222015.0,
+                        "average_power_W": 15.363849382642899
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 4443012.0,
+                        "average_power_W": 18.62599208703504
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 1729854.0,
+                        "average_power_W": 18.411754246815946
+                    }
+                }
+            },
+            "rss.py_local": {
+                "native": {
+                    "sum_rss": 896.0,
+                    "avg_rss": 896.0,
+                    "max_rss": 896.0,
+                    "total_time": 0.0005664825439453125,
+                    "rss_per_time": 1581690.3973063973,
+                    "avg_rss_per_time": 1581690.3973063973
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 96256.0,
+                        "avg_rss": 32085.333333333332,
+                        "max_rss": 60416.0,
+                        "total_time": 0.10204768180847168,
+                        "rss_per_time": 943245.3368285053,
+                        "avg_rss_per_time": 314415.1122761684
+                    },
+                    "wasmtime": {
+                        "sum_rss": 512.0,
+                        "avg_rss": 512.0,
+                        "max_rss": 512.0,
+                        "total_time": 0.000858306884765625,
+                        "rss_per_time": 596523.2355555556,
+                        "avg_rss_per_time": 596523.2355555556
+                    },
+                    "wavm": {
+                        "sum_rss": 121728.0,
+                        "avg_rss": 20288.0,
+                        "max_rss": 35328.0,
+                        "total_time": 0.2530021667480469,
+                        "rss_per_time": 481134.2193809086,
+                        "avg_rss_per_time": 80189.03656348477
+                    },
+                    "iwasm": {
+                        "sum_rss": 49088.0,
+                        "avg_rss": 24544.0,
+                        "max_rss": 48704.0,
+                        "total_time": 0.051424503326416016,
+                        "rss_per_time": 954564.396828782,
+                        "avg_rss_per_time": 477282.198414391
+                    }
+                }
+            },
+            "doc_times.py_local": [
+                {
+                    "binary": "trisolv_2.wasm (wasmer)",
+                    "internal_time": 0.197,
+                    "external_time": 0.6385164260864258
+                },
+                {
+                    "binary": "trisolv_2.wasm (wasmtime)",
+                    "internal_time": 0.03,
+                    "external_time": 0.4104466438293457
+                },
+                {
+                    "binary": "trisolv_2.wasm (wavm)",
+                    "internal_time": 0.235,
+                    "external_time": 0.6609663963317871
+                },
+                {
+                    "binary": "trisolv_2.wasm (iwasm)",
+                    "internal_time": 0.078,
+                    "external_time": 0.42183852195739746
+                },
+                {
+                    "binary": "trisolv_2_native (native)",
+                    "internal_time": 0.01,
+                    "external_time": 0.3984236717224121
+                }
+            ],
+            "doc_rapl.py_local": {
+                "native": {
+                    "average_energy_uJ": 3220145.5,
+                    "average_power_W": 7.5351672289243865
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 4184468.0,
+                        "average_power_W": 8.679954047052163
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 3578665.0,
+                        "average_power_W": 8.419865630540286
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 7526378.5,
+                        "average_power_W": 11.643689565409336
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 4606677.5,
+                        "average_power_W": 9.47479513940014
+                    }
+                }
+            },
+            "doc_rss.py_local": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 50068,
+                        "avg_rss": 25034.0,
+                        "max_rss": 48404,
+                        "total_time": 0.14504241943359375,
+                        "rss_rate": 345195.565514702,
+                        "avg_rss_rate": 172597.782757351
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2304,
+                        "avg_rss": 2304.0,
+                        "max_rss": 2304,
+                        "total_time": 0.05343890190124512,
+                        "rss_rate": 43114.65838609078,
+                        "avg_rss_rate": 43114.65838609078
+                    },
+                    "wavm": {
+                        "sum_rss": 141900,
+                        "avg_rss": 28380.0,
+                        "max_rss": 40436,
+                        "total_time": 0.2609443664550781,
+                        "rss_rate": 543794.0735326365,
+                        "avg_rss_rate": 108758.81470652731
+                    },
+                    "iwasm": {
+                        "sum_rss": 50780,
+                        "avg_rss": 25390.0,
+                        "max_rss": 49372,
+                        "total_time": 0.10561966896057129,
+                        "rss_rate": 480781.66216329084,
+                        "avg_rss_rate": 240390.83108164542
+                    }
+                }
+            }
+        },
+        "optimization_level_3": {
+            "compile.py_local": {
+                "trisolv_native": 0.11629640299906896,
+                "trisolv_wasm": 0.22834774300099525
+            },
+            "times.py_local": {
+                "trisolv_native": 0.009889614000712754,
+                "trisolv_wasmer": 0.08219570999972348,
+                "trisolv_wasmtime": 0.01365549499860208,
+                "trisolv_wavm": 0.2362197999991622,
+                "trisolv_iwasm": 0.07623860800049442
+            },
+            "rapl.py_local": {
+                "native": {
+                    "file": "trisolv_3_native",
+                    "average_energy_uJ": 181915.0,
+                    "average_power_W": 16.046662617006003
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 756406.5,
+                        "average_power_W": 16.455141825586175
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 231384.0,
+                        "average_power_W": 15.917927550961078
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 4446216.5,
+                        "average_power_W": 18.601767607724007
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 1693141.5,
+                        "average_power_W": 18.05443989075834
+                    }
+                }
+            },
+            "rss.py_local": {
+                "native": {
+                    "sum_rss": 896.0,
+                    "avg_rss": 896.0,
+                    "max_rss": 896.0,
+                    "total_time": 0.0005834102630615234,
+                    "rss_per_time": 1535797.4597466285,
+                    "avg_rss_per_time": 1535797.4597466285
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 155836.0,
+                        "avg_rss": 38959.0,
+                        "max_rss": 54144.0,
+                        "total_time": 0.15227437019348145,
+                        "rss_per_time": 1023389.5553269609,
+                        "avg_rss_per_time": 255847.38883174022
+                    },
+                    "wasmtime": {
+                        "sum_rss": 512.0,
+                        "avg_rss": 512.0,
+                        "max_rss": 512.0,
+                        "total_time": 0.0015420913696289062,
+                        "rss_per_time": 332016.6431663575,
+                        "avg_rss_per_time": 332016.6431663575
+                    },
+                    "wavm": {
+                        "sum_rss": 122980.0,
+                        "avg_rss": 24596.0,
+                        "max_rss": 35148.0,
+                        "total_time": 0.2021777629852295,
+                        "rss_per_time": 608276.5888006415,
+                        "avg_rss_per_time": 121655.31776012831
+                    },
+                    "iwasm": {
+                        "sum_rss": 50328.0,
+                        "avg_rss": 25164.0,
+                        "max_rss": 49944.0,
+                        "total_time": 0.050824880599975586,
+                        "rss_per_time": 990223.6740330714,
+                        "avg_rss_per_time": 495111.8370165357
+                    }
+                }
+            },
+            "doc_times.py_local": [
+                {
+                    "binary": "trisolv_3.wasm (wasmer)",
+                    "internal_time": 0.14,
+                    "external_time": 0.5468580722808838
+                },
+                {
+                    "binary": "trisolv_3.wasm (wasmtime)",
+                    "internal_time": 0.029,
+                    "external_time": 0.3879387378692627
+                },
+                {
+                    "binary": "trisolv_3.wasm (wavm)",
+                    "internal_time": 0.234,
+                    "external_time": 0.7021465301513672
+                },
+                {
+                    "binary": "trisolv_3.wasm (iwasm)",
+                    "internal_time": 0.079,
+                    "external_time": 0.5398695468902588
+                },
+                {
+                    "binary": "trisolv_3_native (native)",
+                    "internal_time": 0.01,
+                    "external_time": 0.37298011779785156
+                }
+            ],
+            "doc_rapl.py_local": {
+                "native": {
+                    "average_energy_uJ": 3077812.0,
+                    "average_power_W": 7.904546131731246
+                },
+                "wasm": {
+                    "wasmer": {
+                        "average_energy_uJ": 4208760.0,
+                        "average_power_W": 8.622747117360035
+                    },
+                    "wasmtime": {
+                        "average_energy_uJ": 3681844.5,
+                        "average_power_W": 8.12555159390351
+                    },
+                    "wavm": {
+                        "average_energy_uJ": 7561168.5,
+                        "average_power_W": 11.193577118420237
+                    },
+                    "iwasm": {
+                        "average_energy_uJ": 4702136.5,
+                        "average_power_W": 8.894580355658618
+                    }
+                }
+            },
+            "doc_rss.py_local": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 63496,
+                        "avg_rss": 31748.0,
+                        "max_rss": 61832,
+                        "total_time": 0.1861708164215088,
+                        "rss_rate": 341063.1226767513,
+                        "avg_rss_rate": 170531.56133837564
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2432,
+                        "avg_rss": 2432.0,
+                        "max_rss": 2432,
+                        "total_time": 0.05366110801696777,
+                        "rss_rate": 45321.464462325224,
+                        "avg_rss_rate": 45321.464462325224
+                    },
+                    "wavm": {
+                        "sum_rss": 140620,
+                        "avg_rss": 28124.0,
+                        "max_rss": 40348,
+                        "total_time": 0.25995755195617676,
+                        "rss_rate": 540934.4677307374,
+                        "avg_rss_rate": 108186.89354614749
+                    },
+                    "iwasm": {
+                        "sum_rss": 50904,
+                        "avg_rss": 25452.0,
+                        "max_rss": 49368,
+                        "total_time": 0.10536909103393555,
+                        "rss_rate": 483101.82331938,
+                        "avg_rss_rate": 241550.91165969
+                    }
+                }
+            }
+        }
+    },
+    "total_time": 51.69055676460266
+}

@@ -1,0 +1,44 @@
+{
+    "native": {
+        "sum_rss": 1152.0,
+        "avg_rss": 1152.0,
+        "max_rss": 1152.0,
+        "total_time": 0.0006685256958007812,
+        "rss_per_time": 1723194.796005706,
+        "avg_rss_per_time": 1723194.796005706
+    },
+    "wasm": {
+        "wasmer": {
+            "sum_rss": 152260.0,
+            "avg_rss": 38065.0,
+            "max_rss": 65260.0,
+            "total_time": 0.1521470546722412,
+            "rss_per_time": 1000742.3431758315,
+            "avg_rss_per_time": 250185.58579395787
+        },
+        "wasmtime": {
+            "sum_rss": 512.0,
+            "avg_rss": 512.0,
+            "max_rss": 512.0,
+            "total_time": 0.001028299331665039,
+            "rss_per_time": 497909.494087642,
+            "avg_rss_per_time": 497909.494087642
+        },
+        "wavm": {
+            "sum_rss": 130636.0,
+            "avg_rss": 26127.2,
+            "max_rss": 37700.0,
+            "total_time": 0.2020413875579834,
+            "rss_per_time": 646580.3941408246,
+            "avg_rss_per_time": 129316.07882816493
+        },
+        "iwasm": {
+            "sum_rss": 51392.0,
+            "avg_rss": 25696.0,
+            "max_rss": 50752.0,
+            "total_time": 0.050913333892822266,
+            "rss_per_time": 1009401.5863935639,
+            "avg_rss_per_time": 504700.79319678195
+        }
+    }
+}

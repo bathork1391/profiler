@@ -1,0 +1,24 @@
+{
+    "native": {
+        "average_energy_uJ": 3146018.5,
+        "average_power_W": 7.763325487359263
+    },
+    "wasm": {
+        "wasmer": {
+            "average_energy_uJ": 4123219.5,
+            "average_power_W": 8.290765676188306
+        },
+        "wasmtime": {
+            "average_energy_uJ": 3653250.0,
+            "average_power_W": 8.185719900680356
+        },
+        "wavm": {
+            "average_energy_uJ": 7719340.5,
+            "average_power_W": 11.711293632383612
+        },
+        "iwasm": {
+            "average_energy_uJ": 4740985.5,
+            "average_power_W": 9.386910274859735
+        }
+    }
+}

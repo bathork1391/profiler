@@ -1,0 +1,27 @@
+[
+    {
+        "binary": "trisolv_0.wasm (wasmer)",
+        "internal_time": 0.19,
+        "external_time": 0.6527371406555176
+    },
+    {
+        "binary": "trisolv_0.wasm (wasmtime)",
+        "internal_time": 0.034,
+        "external_time": 0.44304370880126953
+    },
+    {
+        "binary": "trisolv_0.wasm (wavm)",
+        "internal_time": 0.25,
+        "external_time": 0.6396229267120361
+    },
+    {
+        "binary": "trisolv_0.wasm (iwasm)",
+        "internal_time": 0.082,
+        "external_time": 0.5025007724761963
+    },
+    {
+        "binary": "trisolv_0_native (native)",
+        "internal_time": 0.021,
+        "external_time": 0.460782527923584
+    }
+]

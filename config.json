@@ -1,0 +1,29 @@
+{
+  "local_tests": [
+    {"name": "compile.py", "active": true},
+    {"name": "times.py", "active": true},
+    {"name": "rapl.py", "active": true},
+    {"name": "rss.py", "active": true},
+    {"name": "doc_times.py", "active": true},
+    {"name": "doc_rapl.py", "active": true},
+    {"name": "doc_rss.py", "active": true}
+  ],
+  "vm_tests": [
+    {"name": "times.py", "active": true},
+    {"name": "rapl.py", "active": false},
+    {"name": "rss.py", "active": false},
+    {"name": "doc_times.py", "active": false},
+    {"name": "doc_rapl.py", "active": false},
+    {"name": "doc_rss.py", "active": false}
+  ],
+  "optimization_levels": [0, 1, 2, 3],
+  "vm": {
+    "hostname": "192.168.17.64",
+    "username": "imran",
+    "password": "3RDGzQ7nQWKi",
+    "binary_path": "/root/profiler/compiled",
+    "script_path": "/root/profiler/scripts",
+    "results_path": "/root/profiler/results"
+  }
+}
+

@@ -1,0 +1,25 @@
+{
+    "native": {
+        "file": "trisolv_1_native",
+        "average_energy_uJ": 188964.5,
+        "average_power_W": 16.654529794564752
+    },
+    "wasm": {
+        "wasmer": {
+            "average_energy_uJ": 804136.0,
+            "average_power_W": 15.918043724465788
+        },
+        "wasmtime": {
+            "average_energy_uJ": 218475.0,
+            "average_power_W": 15.791398113354004
+        },
+        "wavm": {
+            "average_energy_uJ": 4621234.5,
+            "average_power_W": 18.716329346927814
+        },
+        "iwasm": {
+            "average_energy_uJ": 1814387.5,
+            "average_power_W": 18.442812964367548
+        }
+    }
+}
