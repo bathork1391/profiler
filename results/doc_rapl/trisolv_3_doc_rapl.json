@@ -1,24 +1,24 @@
 {
     "native": {
-        "average_energy_uJ": 3077812.0,
-        "average_power_W": 7.904546131731246
+        "average_energy_uJ": 3178459.0,
+        "average_power_W": 7.746835339407939
     },
     "wasm": {
         "wasmer": {
-            "average_energy_uJ": 4208760.0,
-            "average_power_W": 8.622747117360035
+            "average_energy_uJ": 4250599.5,
+            "average_power_W": 8.778543697052456
         },
         "wasmtime": {
-            "average_energy_uJ": 3681844.5,
-            "average_power_W": 8.12555159390351
+            "average_energy_uJ": 3863576.5,
+            "average_power_W": 7.388678276145096
         },
         "wavm": {
-            "average_energy_uJ": 7561168.5,
-            "average_power_W": 11.193577118420237
+            "average_energy_uJ": 7744395.5,
+            "average_power_W": 12.079702747313494
         },
         "iwasm": {
-            "average_energy_uJ": 4702136.5,
-            "average_power_W": 8.894580355658618
+            "average_energy_uJ": 4804217.5,
+            "average_power_W": 9.014291160425026
         }
     }
 }

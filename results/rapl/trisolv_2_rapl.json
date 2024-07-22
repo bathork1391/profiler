@@ -1,25 +1,25 @@
 {
     "native": {
         "file": "trisolv_2_native",
-        "average_energy_uJ": 207580.0,
-        "average_power_W": 17.4889502736359
+        "average_energy_uJ": 163909.5,
+        "average_power_W": 14.387695002126087
     },
     "wasm": {
         "wasmer": {
-            "average_energy_uJ": 770658.0,
-            "average_power_W": 16.498453309157448
+            "average_energy_uJ": 952787.0,
+            "average_power_W": 19.58604540905748
         },
         "wasmtime": {
-            "average_energy_uJ": 222015.0,
-            "average_power_W": 15.363849382642899
+            "average_energy_uJ": 349089.5,
+            "average_power_W": 24.035448888543158
         },
         "wavm": {
-            "average_energy_uJ": 4443012.0,
-            "average_power_W": 18.62599208703504
+            "average_energy_uJ": 5123247.5,
+            "average_power_W": 20.93486428092403
         },
         "iwasm": {
-            "average_energy_uJ": 1729854.0,
-            "average_power_W": 18.411754246815946
+            "average_energy_uJ": 1723475.5,
+            "average_power_W": 18.51484349139939
         }
     }
 }

@@ -3,11 +3,83 @@ import subprocess
 import json
 import time
 import os
+import ansible_runner
+import psutil
+from threading import Thread
 
 app = Flask(__name__)
 
 LOCAL_SCRIPT_DIR = "/root/profiler/scripts"
 RESULTS_DIR = "/root/profiler/results"
+LOCAL_BINARY_PATH = "/root/profiler/compiled"
+LOCAL_RESULTS_PATH = "/root/profiler/results"
+VPN_CONFIG_PATH = "/etc/openvpn/pfSense-UDP4-2871-imran.ovpn"
+VPN_USERNAME = "imran"
+VPN_PASSWORD = "3RDGzQ7nQWKi"
+
+def is_vpn_connected():
+    """Check if the VPN connection is active by looking for the VPN interface."""
+    for interface, addrs in psutil.net_if_addrs().items():
+        if "tun" in interface or "tap" in interface:
+            return True
+    return False
+
+def initialize_vpn_connection():
+    if is_vpn_connected():
+        print("VPN connection is already established.")
+        return
+    
+    try:
+        vpn_command = f"sudo openvpn --config {VPN_CONFIG_PATH}"
+        process = subprocess.Popen(vpn_command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process.stdin.write(f"{VPN_USERNAME}\n".encode())
+        process.stdin.flush()
+        process.stdin.write(f"{VPN_PASSWORD}\n".encode())
+        process.stdin.flush()
+        time.sleep(10)
+        
+        output, error = process.communicate()
+        if error:
+            raise Exception(f"VPN connection error: {error.decode()}")
+        print("VPN connection established.")
+    except Exception as e:
+        print(f"Failed to establish VPN connection: {e}")
+        raise e
+
+def run_ansible_playbook(application_name, opt_levels, tests, vm_config):
+    extra_vars = {
+        'application_name': application_name,
+        'opt_levels': opt_levels,
+        'tests': tests,
+        'binary_path': vm_config['binary_path'],
+        'script_path': vm_config['script_path'],
+        'results_path': vm_config['results_path'],
+        'local_binary_path': LOCAL_BINARY_PATH,
+        'local_scripts': [f"{LOCAL_SCRIPT_DIR}/{script['name']}" for script in tests],
+        'local_results_path': LOCAL_RESULTS_PATH,
+        'binary_copy_required': True
+    }
+    
+    r = ansible_runner.run(private_data_dir='/root/profiler/ansible', playbook='playbook.yml', extravars=extra_vars, cmdline="-i inventory", quiet=False)
+    
+    for event in r.events:
+        if 'stdout' in event['event_data']:
+            print(event['event_data']['stdout'])
+            yield event['event_data']['stdout'] + '\n'
+    
+    if r.rc != 0:
+        with open(r.stdout.name, 'r') as f:
+            raise Exception(f"Ansible playbook failed: {f.read()}")
+
+def run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
+    initialize_vpn_connection()
+    try:
+        for line in run_ansible_playbook(application_name, opt_levels, vm_tests, vm_config):
+            print(line, end='')
+            yield line
+        print(f"Completed running tests on VM {vm_config['hostname']}...")
+    except Exception as e:
+        print(f"Failed to run Ansible playbook: {str(e)}")
 
 def run_local_script(script_name, application_name, opt_level):
     try:
@@ -25,6 +97,21 @@ def read_json_file(filepath):
     except Exception as e:
         return {"error": str(e)}
 
+def collect_vm_results(application_name, opt_levels, vm_tests, results):
+    for opt_level in opt_levels:
+        level_key = f"optimization_level_{opt_level}"
+        if level_key not in results:
+            results[level_key] = {}
+        for test in vm_tests:
+            test_name = test["name"]
+            test_name_without_py = test_name.replace('.py', '')
+            try:
+                result_file_path = f"{RESULTS_DIR}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
+                test_results = read_json_file(result_file_path)
+                results[level_key][f"{test_name}_vm"] = test_results
+            except Exception as e:
+                results[level_key][f"{test_name}_vm"] = {"error": str(e)}
+
 @app.route('/run_profiling', methods=['POST'])
 def run_profiling():
     @stream_with_context
@@ -38,6 +125,8 @@ def run_profiling():
             config = json.load(file)
         
         local_tests = [t for t in config.get('local_tests', []) if t['active']]
+        vm_tests = [t for t in config.get('vm_tests', []) if t['active']]
+        vm_config = config.get('vm')
         if not opt_levels:
             opt_levels = config.get('optimization_levels', [0, 1, 2, 3])
         
@@ -68,6 +157,17 @@ def run_profiling():
                         results[level_key][f"{test_name}_local"] = test_results
                     except Exception as e:
                         results[level_key][f"{test_name}_local"] = {"error": str(e)}
+
+        # Run VM tests
+        if vm_config and any(test['active'] for test in vm_tests):
+            yield f"\nRunning VM tests...\n"
+            try:
+                for line in run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
+                    yield line
+                collect_vm_results(application_name, opt_levels, vm_tests, results)
+                yield f"\nDisconnected from VM {vm_config['hostname']}...\n"
+            except Exception as e:
+                yield f"\nFailed to run VM tests: {str(e)}\n"
 
         total_time = time.time() - start_time
 

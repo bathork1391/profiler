@@ -1,0 +1,98 @@
+- hosts: vms
+  become: yes
+  tasks:
+    - name: Ensure binary directory exists
+      file:
+        path: "{{ binary_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure script directory exists
+      file:
+        path: "{{ script_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure results directory exists
+      file:
+        path: "{{ results_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure test result subdirectories exist
+      file:
+        path: "{{ results_path }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ tests | map(attribute='name') | map('replace', '.py', '') | list }}"
+
+    - name: Copy binaries to VM
+      copy:
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        dest: "{{ binary_path }}/"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}.wasm"
+
+    - name: Copy binaries to VM (native)
+      copy:
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}_native"
+        dest: "{{ binary_path }}/"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}_native"
+
+    - name: Set execute permission on copied binaries
+      file:
+        path: "{{ binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}.wasm"
+
+    - name: Set execute permission on copied binaries (native)
+      file:
+        path: "{{ binary_path }}/{{ application_name }}_{{ item }}_native"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}_native"
+
+    - name: Copy scripts to VM
+      copy:
+        src: "{{ item }}"
+        dest: "{{ script_path }}/"
+        mode: '0755'
+      loop: "{{ local_scripts }}"
+      loop_control:
+        label: "{{ item | basename }}"
+
+    - name: Run tests on VM
+      shell: "python3 {{ script_path }}/{{ test.name }} {{ application_name }} {{ opt_level }}"
+      loop: "{{ opt_levels | product(tests) | list }}"
+      loop_control:
+        loop_var: "test_item"
+      vars:
+        opt_level: "{{ test_item[0] }}"
+        test: "{{ test_item[1] }}"
+      register: test_results
+      when: test.active
+
+    - name: Display test results
+      debug:
+        msg: "{{ item.shell }}"
+      loop: "{{ test_results.results }}"
+      loop_control:
+        loop_var: "item"
+
+    - name: Verify result files exist on VM
+      stat:
+        path: "{{ results_path }}/{{ test_item[1].name | replace('.py', '') }}/{{ application_name }}_{{ test_item[0] }}_{{ test_item[1].name | replace('.py', '') }}.json"
+      loop: "{{ opt_levels | product(tests) | list }}"
+      loop_control:
+        loop_var: "test_item"
+      register: result_files
+      when: test_item[1].active
+
