@@ -1,0 +1,47 @@
+
+PLAY [vms] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[1;35mcore/2.17/reference_appendices/interpreter_discovery.html for more information.[0m
+[0;32mok: [vm1][0m
+
+TASK [Ensure binary directory exists] ******************************************
+[0;32mok: [vm1][0m
+
+TASK [Ensure script directory exists] ******************************************
+[0;32mok: [vm1][0m
+
+TASK [Ensure results directory exists] *****************************************
+[0;32mok: [vm1][0m
+
+TASK [Ensure test result subdirectories exist] *********************************
+[0;32mok: [vm1] => (item=times)[0m
+
+TASK [Copy binaries to VM] *****************************************************
+[0;32mok: [vm1] => (item=trisolv_3.wasm)[0m
+
+TASK [Copy binaries to VM (native)] ********************************************
+[0;32mok: [vm1] => (item=trisolv_3_native)[0m
+
+TASK [Set execute permission on copied binaries] *******************************
+[0;32mok: [vm1] => (item=trisolv_3.wasm)[0m
+
+TASK [Set execute permission on copied binaries (native)] **********************
+[0;32mok: [vm1] => (item=trisolv_3_native)[0m
+
+TASK [Copy scripts to VM] ******************************************************
+[0;32mok: [vm1] => (item=times.py)[0m
+
+TASK [Run tests on VM] *********************************************************
+[0;33mchanged: [vm1] => (item=[3, {'name': 'times.py', 'active': True}])[0m
+
+TASK [Display test results] ****************************************************
+[0;32mok: [vm1] => (item={'changed': True, 'stdout': 'Native Execution Time: 0.015002871863543987s\nwasmer Execution Time: 0.1618738011457026s\nwasmtime Execution Time: 0.025758028961718082s\nError executing /root/profiler/compiled/trisolv_3.wasm with wavm: Host X86 CPU does not support SSE 4.1, which WAVM requires for WebAssembly SIMD code.\n\niwasm Execution Time: 0.1043777628801763s\nExecution times saved to /root/profiler/results/times/trisolv_3_times.json', 'stderr': '', 'rc': 0, 'cmd': 'python3 /root/profiler/scripts/times.py trisolv 3', 'start': '2024-07-22 19:08:22.548668', 'end': '2024-07-22 19:08:22.888954', 'delta': '0:00:00.340286', 'msg': '', 'invocation': {'module_args': {'_raw_params': 'python3 /root/profiler/scripts/times.py trisolv 3', '_uses_shell': True, 'expand_argument_vars': True, 'stdin_add_newline': True, 'strip_empty_ends': True, 'argv': None, 'chdir': None, 'executable': None, 'creates': None, 'removes': None, 'stdin': None}}, 'stdout_lines': ['Native Execution Time: 0.015002871863543987s', 'wasmer Execution Time: 0.1618738011457026s', 'wasmtime Execution Time: 0.025758028961718082s', 'Error executing /root/profiler/compiled/trisolv_3.wasm with wavm: Host X86 CPU does not support SSE 4.1, which WAVM requires for WebAssembly SIMD code.', '', 'iwasm Execution Time: 0.1043777628801763s', 'Execution times saved to /root/profiler/results/times/trisolv_3_times.json'], 'stderr_lines': [], 'failed': False, 'test_item': [3, {'name': 'times.py', 'active': True}], 'ansible_loop_var': 'test_item'}) => {[0m
+[0;32m    "msg": "Native Execution Time: 0.015002871863543987s\nwasmer Execution Time: 0.1618738011457026s\nwasmtime Execution Time: 0.025758028961718082s\nError executing /root/profiler/compiled/trisolv_3.wasm with wavm: Host X86 CPU does not support SSE 4.1, which WAVM requires for WebAssembly SIMD code.\n\niwasm Execution Time: 0.1043777628801763s\nExecution times saved to /root/profiler/results/times/trisolv_3_times.json"[0m
+[0;32m}[0m
+
+TASK [Verify result files exist on VM] *****************************************
+[0;32mok: [vm1] => (item=[3, {'name': 'times.py', 'active': True}])[0m
+
+PLAY RECAP *********************************************************************
+[0;33mvm1[0m                        : [0;32mok=13  [0m [0;33mchanged=1   [0m unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

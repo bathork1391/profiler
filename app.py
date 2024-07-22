@@ -63,23 +63,20 @@ def run_ansible_playbook(application_name, opt_levels, tests, vm_config):
     r = ansible_runner.run(private_data_dir='/root/profiler/ansible', playbook='playbook.yml', extravars=extra_vars, cmdline="-i inventory", quiet=False)
     
     for event in r.events:
-        if 'stdout' in event['event_data']:
-            print(event['event_data']['stdout'])
+        if 'event_data' in event and 'stdout' in event['event_data']:
             yield event['event_data']['stdout'] + '\n'
     
     if r.rc != 0:
-        with open(r.stdout.name, 'r') as f:
-            raise Exception(f"Ansible playbook failed: {f.read()}")
+        raise Exception(f"Ansible playbook failed")
 
 def run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
     initialize_vpn_connection()
     try:
         for line in run_ansible_playbook(application_name, opt_levels, vm_tests, vm_config):
-            print(line, end='')
             yield line
-        print(f"Completed running tests on VM {vm_config['hostname']}...")
+        yield f"Completed running tests on VM {vm_config['hostname']}...\n"
     except Exception as e:
-        print(f"Failed to run Ansible playbook: {str(e)}")
+        yield f"Failed to run Ansible playbook: {str(e)}\n"
 
 def run_local_script(script_name, application_name, opt_level):
     try:
@@ -106,9 +103,13 @@ def collect_vm_results(application_name, opt_levels, vm_tests, results):
             test_name = test["name"]
             test_name_without_py = test_name.replace('.py', '')
             try:
-                result_file_path = f"{RESULTS_DIR}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
-                test_results = read_json_file(result_file_path)
-                results[level_key][f"{test_name}_vm"] = test_results
+                # Define the local path to which the file will be fetched
+                local_result_file_path = f"{LOCAL_RESULTS_PATH}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
+                if os.path.exists(local_result_file_path):
+                    test_results = read_json_file(local_result_file_path)
+                    results[level_key][f"{test_name}_vm"] = test_results
+                else:
+                    results[level_key][f"{test_name}_vm"] = {"error": "Result file not found"}
             except Exception as e:
                 results[level_key][f"{test_name}_vm"] = {"error": str(e)}
 
@@ -142,9 +143,9 @@ def run_profiling():
             for test in local_tests:
                 test_name = test["name"]
                 yield f"\nRunning {test_name} locally...\n"
-                
+
                 result, error = run_local_script(test_name, application_name, opt_level)
-                
+
                 if error:
                     results[level_key][f"{test_name}_local"] = {"error": error}
                     yield error + "\n"
@@ -175,13 +176,13 @@ def run_profiling():
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         profile_dir = os.path.join(RESULTS_DIR, f'{application_name}_{timestamp}')
         os.makedirs(profile_dir, exist_ok=True)
-        
+
         # Save results to a JSON file
         results_file = os.path.join(profile_dir, f'{application_name}_results.json')
         json_results = {"application": application_name, "profiling_results": results, "total_time": total_time}
         with open(results_file, 'w') as json_file:
             json.dump(json_results, json_file, indent=4)
-        
+
         yield "\nFinal Results:\n"
         yield json.dumps(json_results, indent=4)
 
