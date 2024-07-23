@@ -9,7 +9,7 @@ COMPILED_DIR = "/root/profiler/compiled"
 RESULTS_DIR = "/root/profiler/results/times"
 
 # Runtimes
-RUNTIMES = ["wasmer", "wasmtime", "wavm", "iwasm"]
+RUNTIMES = ["wasmer", "wasmtime","wavm","iwasm"]
 
 def check_file_exists(file_path):
     return os.path.isfile(file_path)

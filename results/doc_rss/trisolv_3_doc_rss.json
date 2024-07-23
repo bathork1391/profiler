@@ -2,36 +2,36 @@
     "native": null,
     "wasm": {
         "wasmer": {
-            "sum_rss": 187956,
-            "avg_rss": 46989.0,
-            "max_rss": 80920,
-            "total_time": 0.2733469009399414,
-            "rss_rate": 687609.7711504579,
-            "avg_rss_rate": 171902.44278761448
+            "sum_rss": 111056,
+            "avg_rss": 27764.0,
+            "max_rss": 45708,
+            "total_time": 0.2118241786956787,
+            "rss_rate": 524283.8692156609,
+            "avg_rss_rate": 131070.96730391523
         },
         "wasmtime": {
-            "sum_rss": 2816,
-            "avg_rss": 2816.0,
-            "max_rss": 2816,
-            "total_time": 0.05365300178527832,
-            "rss_rate": 52485.41379417607,
-            "avg_rss_rate": 52485.41379417607
+            "sum_rss": 2136,
+            "avg_rss": 2136.0,
+            "max_rss": 2136,
+            "total_time": 0.05475473403930664,
+            "rss_rate": 39010.32554494074,
+            "avg_rss_rate": 39010.32554494074
         },
         "wavm": {
-            "sum_rss": 141260,
-            "avg_rss": 28252.0,
-            "max_rss": 40348,
-            "total_time": 0.2613813877105713,
-            "rss_rate": 540436.3380166065,
-            "avg_rss_rate": 108087.26760332132
+            "sum_rss": 1012,
+            "avg_rss": 1012.0,
+            "max_rss": 1012,
+            "total_time": 0.05448007583618164,
+            "rss_rate": 18575.598224991903,
+            "avg_rss_rate": 18575.598224991903
         },
         "iwasm": {
-            "sum_rss": 50876,
-            "avg_rss": 25438.0,
-            "max_rss": 49340,
-            "total_time": 0.1050405502319336,
-            "rss_rate": 484346.28234204627,
-            "avg_rss_rate": 242173.14117102313
+            "sum_rss": 92128,
+            "avg_rss": 30709.333333333332,
+            "max_rss": 46540,
+            "total_time": 0.16002869606018066,
+            "rss_rate": 575696.7485716074,
+            "avg_rss_rate": 191898.9161905358
         }
     }
 }

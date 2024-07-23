@@ -1,44 +1,36 @@
 {
     "native": {
-        "sum_rss": 1536.0,
-        "avg_rss": 1536.0,
-        "max_rss": 1536.0,
-        "total_time": 0.0006289482116699219,
-        "rss_per_time": 2442172.4579226687,
-        "avg_rss_per_time": 2442172.4579226687
+        "sum_rss": 1628.0,
+        "avg_rss": 1628.0,
+        "max_rss": 1628.0,
+        "total_time": 0.0008149147033691406,
+        "rss_per_time": 1997755.0942071388,
+        "avg_rss_per_time": 1997755.0942071388
     },
     "wasm": {
         "wasmer": {
-            "sum_rss": 238676.0,
-            "avg_rss": 47735.2,
-            "max_rss": 72192.0,
-            "total_time": 0.20225143432617188,
-            "rss_per_time": 1180095.4628340784,
-            "avg_rss_per_time": 236019.09256681564
+            "sum_rss": 71784.0,
+            "avg_rss": 23928.0,
+            "max_rss": 39788.0,
+            "total_time": 0.10115456581115723,
+            "rss_per_time": 709646.6622575559,
+            "avg_rss_per_time": 236548.88741918528
         },
         "wasmtime": {
-            "sum_rss": 768.0,
-            "avg_rss": 768.0,
-            "max_rss": 768.0,
-            "total_time": 0.0008099079132080078,
-            "rss_per_time": 948255.9528996173,
-            "avg_rss_per_time": 948255.9528996173
-        },
-        "wavm": {
-            "sum_rss": 154308.0,
-            "avg_rss": 25718.0,
-            "max_rss": 34900.0,
-            "total_time": 0.25257444381713867,
-            "rss_per_time": 610940.670275087,
-            "avg_rss_per_time": 101823.44504584782
+            "sum_rss": 528.0,
+            "avg_rss": 528.0,
+            "max_rss": 528.0,
+            "total_time": 0.0009636878967285156,
+            "rss_per_time": 547895.2281048986,
+            "avg_rss_per_time": 547895.2281048986
         },
         "iwasm": {
-            "sum_rss": 49812.0,
-            "avg_rss": 24906.0,
-            "max_rss": 49428.0,
-            "total_time": 0.051851511001586914,
-            "rss_per_time": 960666.3149792396,
-            "avg_rss_per_time": 480333.1574896198
+            "sum_rss": 44752.0,
+            "avg_rss": 14917.333333333334,
+            "max_rss": 44280.0,
+            "total_time": 0.1007699966430664,
+            "rss_per_time": 444100.4415085411,
+            "avg_rss_per_time": 148033.48050284706
         }
     }
 }

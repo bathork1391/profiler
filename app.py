@@ -36,7 +36,7 @@ def initialize_vpn_connection():
         process.stdin.flush()
         process.stdin.write(f"{VPN_PASSWORD}\n".encode())
         process.stdin.flush()
-        time.sleep(10)
+        time.sleep(5)
         
         output, error = process.communicate()
         if error:
@@ -199,4 +199,8 @@ if __name__ == '__main__':
     app.debug = True  # Enable debug mode
     print("Server is running and waiting for the next command...")
     app.run(host='0.0.0.0', port=5000)
-
+    
+    
+    
+    
+    

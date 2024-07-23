@@ -1,10 +1,13 @@
+#working script for first script on the vm.. duplicate json file results fixed... vpn pending... results to be displayed on client pending
+
+
+
 from flask import Flask, request, jsonify, Response, stream_with_context
 import subprocess
 import json
 import time
 import os
 import ansible_runner
-import paramiko
 import psutil
 from threading import Thread
 
@@ -12,6 +15,8 @@ app = Flask(__name__)
 
 LOCAL_SCRIPT_DIR = "/root/profiler/scripts"
 RESULTS_DIR = "/root/profiler/results"
+LOCAL_BINARY_PATH = "/root/profiler/compiled"
+LOCAL_RESULTS_PATH = "/root/profiler/results"
 VPN_CONFIG_PATH = "/etc/openvpn/pfSense-UDP4-2871-imran.ovpn"
 VPN_USERNAME = "imran"
 VPN_PASSWORD = "3RDGzQ7nQWKi"
@@ -53,14 +58,29 @@ def run_ansible_playbook(application_name, opt_levels, tests, vm_config):
         'binary_path': vm_config['binary_path'],
         'script_path': vm_config['script_path'],
         'results_path': vm_config['results_path'],
+        'local_binary_path': LOCAL_BINARY_PATH,
+        'local_scripts': [f"{LOCAL_SCRIPT_DIR}/{script['name']}" for script in tests],
+        'local_results_path': LOCAL_RESULTS_PATH,
         'binary_copy_required': True
     }
     
-    r = ansible_runner.run(private_data_dir='/root/profiler/ansible', playbook='playbook.yml', extravars=extra_vars, cmdline="-i inventory")
+    r = ansible_runner.run(private_data_dir='/root/profiler/ansible', playbook='playbook.yml', extravars=extra_vars, cmdline="-i inventory", quiet=False)
+    
+    for event in r.events:
+        if 'event_data' in event and 'stdout' in event['event_data']:
+            yield event['event_data']['stdout'] + '\n'
     
     if r.rc != 0:
-        with open(r.stdout.name, 'r') as f:
-            raise Exception(f"Ansible playbook failed: {f.read()}")
+        raise Exception(f"Ansible playbook failed")
+
+def run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
+    initialize_vpn_connection()
+    try:
+        for line in run_ansible_playbook(application_name, opt_levels, vm_tests, vm_config):
+            yield line
+        yield f"Completed running tests on VM {vm_config['hostname']}...\n"
+    except Exception as e:
+        yield f"Failed to run Ansible playbook: {str(e)}\n"
 
 def run_local_script(script_name, application_name, opt_level):
     try:
@@ -78,14 +98,6 @@ def read_json_file(filepath):
     except Exception as e:
         return {"error": str(e)}
 
-def run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
-    initialize_vpn_connection()
-    try:
-        run_ansible_playbook(application_name, opt_levels, vm_tests, vm_config)
-        print(f"Completed running tests on VM {vm_config['hostname']}...")
-    except Exception as e:
-        print(f"Failed to run Ansible playbook: {str(e)}")
-
 def collect_vm_results(application_name, opt_levels, vm_tests, results):
     for opt_level in opt_levels:
         level_key = f"optimization_level_{opt_level}"
@@ -95,9 +107,13 @@ def collect_vm_results(application_name, opt_levels, vm_tests, results):
             test_name = test["name"]
             test_name_without_py = test_name.replace('.py', '')
             try:
-                result_file_path = f"{RESULTS_DIR}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
-                test_results = read_json_file(result_file_path)
-                results[level_key][f"{test_name}_vm"] = test_results
+                # Define the local path to which the file will be fetched
+                local_result_file_path = f"{LOCAL_RESULTS_PATH}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
+                if os.path.exists(local_result_file_path):
+                    test_results = read_json_file(local_result_file_path)
+                    results[level_key][f"{test_name}_vm"] = test_results
+                else:
+                    results[level_key][f"{test_name}_vm"] = {"error": "Result file not found"}
             except Exception as e:
                 results[level_key][f"{test_name}_vm"] = {"error": str(e)}
 
@@ -122,11 +138,6 @@ def run_profiling():
         results = {}
         start_time = time.time()
 
-        vm_thread = None
-        if vm_config and any(test['active'] for test in vm_tests):
-            vm_thread = Thread(target=run_vm_tests, args=(application_name, opt_levels, vm_tests, vm_config))
-            vm_thread.start()
-
         # Run local tests
         for opt_level in opt_levels:
             level_key = f"optimization_level_{opt_level}"
@@ -136,9 +147,9 @@ def run_profiling():
             for test in local_tests:
                 test_name = test["name"]
                 yield f"\nRunning {test_name} locally...\n"
-                
+
                 result, error = run_local_script(test_name, application_name, opt_level)
-                
+
                 if error:
                     results[level_key][f"{test_name}_local"] = {"error": error}
                     yield error + "\n"
@@ -152,24 +163,30 @@ def run_profiling():
                     except Exception as e:
                         results[level_key][f"{test_name}_local"] = {"error": str(e)}
 
-        if vm_thread:
-            vm_thread.join()
-            collect_vm_results(application_name, opt_levels, vm_tests, results)
-            yield f"\nDisconnected from VM {vm_config['hostname']}...\n"
-        
+        # Run VM tests
+        if vm_config and any(test['active'] for test in vm_tests):
+            yield f"\nRunning VM tests...\n"
+            try:
+                for line in run_vm_tests(application_name, opt_levels, vm_tests, vm_config):
+                    yield line
+                collect_vm_results(application_name, opt_levels, vm_tests, results)
+                yield f"\nDisconnected from VM {vm_config['hostname']}...\n"
+            except Exception as e:
+                yield f"\nFailed to run VM tests: {str(e)}\n"
+
         total_time = time.time() - start_time
 
         # Create a directory for this profiling run
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         profile_dir = os.path.join(RESULTS_DIR, f'{application_name}_{timestamp}')
         os.makedirs(profile_dir, exist_ok=True)
-        
+
         # Save results to a JSON file
         results_file = os.path.join(profile_dir, f'{application_name}_results.json')
         json_results = {"application": application_name, "profiling_results": results, "total_time": total_time}
         with open(results_file, 'w') as json_file:
             json.dump(json_results, json_file, indent=4)
-        
+
         yield "\nFinal Results:\n"
         yield json.dumps(json_results, indent=4)
 
@@ -186,4 +203,120 @@ if __name__ == '__main__':
     app.debug = True  # Enable debug mode
     print("Server is running and waiting for the next command...")
     app.run(host='0.0.0.0', port=5000)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+----------------------------------------------------
+&&&&&&&&&&&**********************************************************
+- hosts: vms
+  become: yes
+  tasks:
+    - name: Ensure binary directory exists
+      file:
+        path: "{{ binary_path }}"
+        state: directory
+        mode: '0755'
 
+    - name: Ensure script directory exists
+      file:
+        path: "{{ script_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure results directory exists
+      file:
+        path: "{{ results_path }}"
+        state: directory
+        mode: '0755'
+
+    - name: Ensure test result subdirectories exist
+      file:
+        path: "{{ results_path }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ tests | map(attribute='name') | map('replace', '.py', '') | list }}"
+
+    - name: Copy binaries to VM
+      copy:
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        dest: "{{ binary_path }}/"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}.wasm"
+
+    - name: Copy binaries to VM (native)
+      copy:
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}_native"
+        dest: "{{ binary_path }}/"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}_native"
+
+    - name: Set execute permission on copied binaries
+      file:
+        path: "{{ binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}.wasm"
+
+    - name: Set execute permission on copied binaries (native)
+      file:
+        path: "{{ binary_path }}/{{ application_name }}_{{ item }}_native"
+        mode: '0755'
+      loop: "{{ opt_levels }}"
+      loop_control:
+        label: "{{ application_name }}_{{ item }}_native"
+
+    - name: Copy scripts to VM
+      copy:
+        src: "{{ item }}"
+        dest: "{{ script_path }}/"
+        mode: '0755'
+      loop: "{{ local_scripts }}"
+      loop_control:
+        label: "{{ item | basename }}"
+
+    - name: Run tests on VM
+      shell: "python3 {{ script_path }}/{{ test.name }} {{ application_name }} {{ opt_level }}"
+      loop: "{{ opt_levels | product(tests) | list }}"
+      loop_control:
+        loop_var: "test_item"
+      vars:
+        opt_level: "{{ test_item[0] }}"
+        test: "{{ test_item[1] }}"
+      register: test_results
+      when: test.active
+
+    - name: Fetch result files from VM
+      fetch:
+        src: "{{ results_path }}/{{ test_item[1].name | replace('.py', '') }}/{{ application_name }}_{{ test_item[0] }}_{{ test_item[1].name | replace('.py', '') }}.json"
+        dest: "{{ local_results_path }}/{{ test_item[1].name | replace('.py', '') }}/"
+        flat: yes
+      loop: "{{ opt_levels | product(tests) | list }}"
+      loop_control:
+        loop_var: "test_item"
+      when: test_item[1].active
+
+    
+    
+    
+    
+    
+    
+    
