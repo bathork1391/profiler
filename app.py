@@ -15,7 +15,7 @@ LOCAL_BINARY_PATH = "/root/profiler/compiled"
 LOCAL_RESULTS_PATH = "/root/profiler/results"
 VPN_CONFIG_PATH = "/etc/openvpn/pfSense-UDP4-2871-imran.ovpn"
 VPN_USERNAME = "imran"
-VPN_PASSWORD = "3RDGzQ7nQWKi"
+VPN_PASSWORD = "x"
 
 def is_vpn_connected():
     """Check if the VPN connection is active by looking for the VPN interface."""
