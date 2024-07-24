@@ -1,0 +1,22 @@
+{
+    "application": "trisolv",
+    "profiling_results": {
+        "optimization_level_3": {
+            "times.py_local": {
+                "trisolv_native": 0.011170597001182614,
+                "trisolv_wasmer": 0.08422179599801893,
+                "trisolv_wasmtime": 0.01349051800207235,
+                "trisolv_wavm": 0.23334657499799505,
+                "trisolv_iwasm": 0.07502472100168234
+            },
+            "times.py_vm": {
+                "trisolv_native": 0.013426104560494423,
+                "trisolv_wasmer": 0.1253246171399951,
+                "trisolv_wasmtime": 0.019866821356117725,
+                "trisolv_wavm": 0.00327256228774786,
+                "trisolv_iwasm": 0.10246773436665535
+            }
+        }
+    },
+    "total_time": 8.273750305175781
+}
