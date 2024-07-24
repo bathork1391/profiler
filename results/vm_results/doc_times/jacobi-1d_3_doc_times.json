@@ -1,0 +1,27 @@
+[
+    {
+        "binary": "jacobi-1d_3.wasm (wasmer)",
+        "internal_time": 0.175,
+        "external_time": 0.5069537162780762
+    },
+    {
+        "binary": "jacobi-1d_3.wasm (wasmtime)",
+        "internal_time": 0.033,
+        "external_time": 0.3785209655761719
+    },
+    {
+        "binary": "jacobi-1d_3.wasm (wavm)",
+        "internal_time": 0.007,
+        "external_time": 0.3253605365753174
+    },
+    {
+        "binary": "jacobi-1d_3.wasm (iwasm)",
+        "internal_time": 0.111,
+        "external_time": 0.4781477451324463
+    },
+    {
+        "binary": "jacobi-1d_3_native (native)",
+        "internal_time": 0.001,
+        "external_time": 0.29201197624206543
+    }
+]

@@ -1,64 +1,35 @@
 - hosts: vms
   become: yes
   tasks:
-    - name: Ensure binary directory exists
+    - name: Create necessary directories
       file:
-        path: "{{ binary_path }}"
+        path: "{{ item }}"
         state: directory
         mode: '0755'
-
-    - name: Ensure script directory exists
-      file:
-        path: "{{ script_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure results directory exists
-      file:
-        path: "{{ results_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure test result subdirectories exist
+      loop:
+        - "{{ binary_path }}"
+        - "{{ script_path }}"
+        - "{{ results_path }}"
+      loop_control:
+        label: "{{ item | basename }}"
+    
+    - name: Create test result subdirectories
       file:
         path: "{{ results_path }}/{{ item }}"
         state: directory
         mode: '0755'
       loop: "{{ tests | map(attribute='name') | map('replace', '.py', '') | list }}"
-
-    - name: Copy binaries to VM
+      loop_control:
+        label: "{{ item }}"
+    
+    - name: Copy binaries and set permissions
       copy:
-        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item.0 }}{{ item.1 }}"
         dest: "{{ binary_path }}/"
         mode: '0755'
-      loop: "{{ opt_levels }}"
+      loop: "{{ opt_levels | product(['.wasm', '_native']) }}"
       loop_control:
-        label: "{{ application_name }}_{{ item }}.wasm"
-
-    - name: Copy binaries to VM (native)
-      copy:
-        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}_native"
-        dest: "{{ binary_path }}/"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}_native"
-
-    - name: Set execute permission on copied binaries
-      file:
-        path: "{{ binary_path }}/{{ application_name }}_{{ item }}.wasm"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}.wasm"
-
-    - name: Set execute permission on copied binaries (native)
-      file:
-        path: "{{ binary_path }}/{{ application_name }}_{{ item }}_native"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}_native"
+        label: "{{ application_name }}_{{ item.0 }}{{ item.1 }}"
 
     - name: Copy scripts to VM
       copy:

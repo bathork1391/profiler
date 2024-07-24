@@ -1,12 +1,12 @@
 {
   "local_tests": [
-    {"name": "compile.py", "active": false},
+    {"name": "compile.py", "active": true},
     {"name": "times.py", "active": true},
-    {"name": "rapl.py", "active": true},
-    {"name": "rss.py", "active": true},
-    {"name": "doc_times.py", "active": true},
-    {"name": "doc_rapl.py", "active": true},
-    {"name": "doc_rss.py", "active": true}
+    {"name": "rapl.py", "active": false},
+    {"name": "rss.py", "active": false},
+    {"name": "doc_times.py", "active": false},
+    {"name": "doc_rapl.py", "active": false},
+    {"name": "doc_rss.py", "active": false}
   ],
   "vm_tests": [
     {"name": "times.py", "active": true},

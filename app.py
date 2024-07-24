@@ -29,11 +29,11 @@ def initialize_vpn_connection():
     try:
         vpn_command = f"sudo {VPN_SCRIPT_PATH}"
         process = subprocess.Popen(vpn_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        time.sleep(10)  # Allow some time for the VPN to establish
+        time.sleep(1)  # Allow some time for the VPN to establish
 
         retries = 5
         while not is_vpn_connected() and retries > 0:
-            time.sleep(5)
+            time.sleep(1)
             retries -= 1
         
         if not is_vpn_connected():

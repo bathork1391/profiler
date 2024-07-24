@@ -1,0 +1,126 @@
+{
+    "application": "jacobi-1d",
+    "profiling_results": {
+        "optimization_level_3": {
+            "compile.py_local": {
+                "jacobi-1d_native": 0.3741024410010141,
+                "jacobi-1d_wasm": 0.4100276310018671
+            },
+            "times.py_local": {
+                "jacobi-1d_native": 0.0013460539994412102,
+                "jacobi-1d_wasmer": 0.13479544400252053,
+                "jacobi-1d_wasmtime": 0.0061050610020174645,
+                "jacobi-1d_wavm": 0.22310744400238036,
+                "jacobi-1d_iwasm": 0.07371024199892418
+            },
+            "times.py_vm": {
+                "jacobi-1d_native": 0.001405050978064537,
+                "jacobi-1d_wasmer": 0.1458003232255578,
+                "jacobi-1d_wasmtime": 0.026671430096030235,
+                "jacobi-1d_wavm": 0.003636099398136139,
+                "jacobi-1d_iwasm": 0.09982201363891363
+            },
+            "rss.py_vm": {
+                "native": {
+                    "sum_rss": 1276.0,
+                    "avg_rss": 1276.0,
+                    "max_rss": 1276.0,
+                    "total_time": 0.0007085800170898438,
+                    "rss_per_time": 1800784.6244952893,
+                    "avg_rss_per_time": 1800784.6244952893
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 31620.0,
+                        "avg_rss": 10540.0,
+                        "max_rss": 31176.0,
+                        "total_time": 0.10095787048339844,
+                        "rss_per_time": 313199.950123746,
+                        "avg_rss_per_time": 104399.983374582
+                    },
+                    "wasmtime": {
+                        "sum_rss": 532.0,
+                        "avg_rss": 532.0,
+                        "max_rss": 532.0,
+                        "total_time": 0.0006959438323974609,
+                        "rss_per_time": 764429.5059952039,
+                        "avg_rss_per_time": 764429.5059952039
+                    },
+                    "iwasm": {
+                        "sum_rss": 45200.0,
+                        "avg_rss": 22600.0,
+                        "max_rss": 44512.0,
+                        "total_time": 0.0506746768951416,
+                        "rss_per_time": 891964.2466301253,
+                        "avg_rss_per_time": 445982.12331506266
+                    }
+                }
+            },
+            "doc_times.py_vm": [
+                {
+                    "binary": "jacobi-1d_3.wasm (wasmer)",
+                    "internal_time": 0.175,
+                    "external_time": 0.5069537162780762
+                },
+                {
+                    "binary": "jacobi-1d_3.wasm (wasmtime)",
+                    "internal_time": 0.033,
+                    "external_time": 0.3785209655761719
+                },
+                {
+                    "binary": "jacobi-1d_3.wasm (wavm)",
+                    "internal_time": 0.007,
+                    "external_time": 0.3253605365753174
+                },
+                {
+                    "binary": "jacobi-1d_3.wasm (iwasm)",
+                    "internal_time": 0.111,
+                    "external_time": 0.4781477451324463
+                },
+                {
+                    "binary": "jacobi-1d_3_native (native)",
+                    "internal_time": 0.001,
+                    "external_time": 0.29201197624206543
+                }
+            ],
+            "doc_rss.py_vm": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 110668,
+                        "avg_rss": 27667.0,
+                        "max_rss": 45196,
+                        "total_time": 0.2157573699951172,
+                        "rss_rate": 512928.0172561639,
+                        "avg_rss_rate": 128232.00431404097
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2816,
+                        "avg_rss": 2816.0,
+                        "max_rss": 2816,
+                        "total_time": 0.05420970916748047,
+                        "rss_rate": 51946.414087926394,
+                        "avg_rss_rate": 51946.414087926394
+                    },
+                    "wavm": {
+                        "sum_rss": 968,
+                        "avg_rss": 968.0,
+                        "max_rss": 968,
+                        "total_time": 0.05375385284423828,
+                        "rss_rate": 18008.011496496052,
+                        "avg_rss_rate": 18008.011496496052
+                    },
+                    "iwasm": {
+                        "sum_rss": 90788,
+                        "avg_rss": 30262.666666666668,
+                        "max_rss": 45244,
+                        "total_time": 0.15970396995544434,
+                        "rss_rate": 568476.7888069962,
+                        "avg_rss_rate": 189492.2629356654
+                    }
+                }
+            }
+        }
+    },
+    "total_time": 17.655904531478882
+}

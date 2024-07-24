@@ -1,7 +1,7 @@
-
-#VPN issue fixed.... final json file have both local and vm values,,, ISSUE: local json file contains results of vm,
-#ISSUE: local resutls are replaced by the VM results 
-
+#local values overwritten by vm fixed
+#vpn included
+#separate folder locally for vm results
+#wavm on vm needs attention
 
 from flask import Flask, request, jsonify, Response, stream_with_context
 import subprocess
@@ -34,11 +34,11 @@ def initialize_vpn_connection():
     try:
         vpn_command = f"sudo {VPN_SCRIPT_PATH}"
         process = subprocess.Popen(vpn_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        time.sleep(10)  # Allow some time for the VPN to establish
+        time.sleep(1)  # Allow some time for the VPN to establish
 
         retries = 5
         while not is_vpn_connected() and retries > 0:
-            time.sleep(5)
+            time.sleep(1)
             retries -= 1
         
         if not is_vpn_connected():
@@ -105,10 +105,10 @@ def collect_vm_results(application_name, opt_levels, vm_tests, results):
             test_name = test["name"]
             test_name_without_py = test_name.replace('.py', '')
             try:
-                # Define the local path to which the file will be fetched
-                local_result_file_path = f"{LOCAL_RESULTS_PATH}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
-                if os.path.exists(local_result_file_path):
-                    test_results = read_json_file(local_result_file_path)
+                # Define the new path to which the VM result files are fetched
+                vm_result_file_path = f"{LOCAL_RESULTS_PATH}/vm_results/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
+                if os.path.exists(vm_result_file_path):
+                    test_results = read_json_file(vm_result_file_path)
                     results[level_key][f"{test_name}_vm"] = test_results
                 else:
                     results[level_key][f"{test_name}_vm"] = {"error": "Result file not found"}
@@ -204,71 +204,40 @@ if __name__ == '__main__':
 
 
 
-
-________________________________________________*********************************************
-
+************************************************************8
 
 - hosts: vms
   become: yes
   tasks:
-    - name: Ensure binary directory exists
+    - name: Create necessary directories
       file:
-        path: "{{ binary_path }}"
+        path: "{{ item }}"
         state: directory
         mode: '0755'
-
-    - name: Ensure script directory exists
-      file:
-        path: "{{ script_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure results directory exists
-      file:
-        path: "{{ results_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Ensure test result subdirectories exist
+      loop:
+        - "{{ binary_path }}"
+        - "{{ script_path }}"
+        - "{{ results_path }}"
+      loop_control:
+        label: "{{ item | basename }}"
+    
+    - name: Create test result subdirectories
       file:
         path: "{{ results_path }}/{{ item }}"
         state: directory
         mode: '0755'
       loop: "{{ tests | map(attribute='name') | map('replace', '.py', '') | list }}"
-
-    - name: Copy binaries to VM
+      loop_control:
+        label: "{{ item }}"
+    
+    - name: Copy binaries and set permissions
       copy:
-        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}.wasm"
+        src: "{{ local_binary_path }}/{{ application_name }}_{{ item.0 }}{{ item.1 }}"
         dest: "{{ binary_path }}/"
         mode: '0755'
-      loop: "{{ opt_levels }}"
+      loop: "{{ opt_levels | product(['.wasm', '_native']) }}"
       loop_control:
-        label: "{{ application_name }}_{{ item }}.wasm"
-
-    - name: Copy binaries to VM (native)
-      copy:
-        src: "{{ local_binary_path }}/{{ application_name }}_{{ item }}_native"
-        dest: "{{ binary_path }}/"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}_native"
-
-    - name: Set execute permission on copied binaries
-      file:
-        path: "{{ binary_path }}/{{ application_name }}_{{ item }}.wasm"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}.wasm"
-
-    - name: Set execute permission on copied binaries (native)
-      file:
-        path: "{{ binary_path }}/{{ application_name }}_{{ item }}_native"
-        mode: '0755'
-      loop: "{{ opt_levels }}"
-      loop_control:
-        label: "{{ application_name }}_{{ item }}_native"
+        label: "{{ application_name }}_{{ item.0 }}{{ item.1 }}"
 
     - name: Copy scripts to VM
       copy:
@@ -293,10 +262,11 @@ ________________________________________________********************************
     - name: Fetch result files from VM
       fetch:
         src: "{{ results_path }}/{{ test_item[1].name | replace('.py', '') }}/{{ application_name }}_{{ test_item[0] }}_{{ test_item[1].name | replace('.py', '') }}.json"
-        dest: "{{ local_results_path }}/{{ test_item[1].name | replace('.py', '') }}/"
+        dest: "{{ local_results_path }}/vm_results/{{ test_item[1].name | replace('.py', '') }}/"
         flat: yes
       loop: "{{ opt_levels | product(tests) | list }}"
       loop_control:
         loop_var: "test_item"
       when: test_item[1].active
+
 
