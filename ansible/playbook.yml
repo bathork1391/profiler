@@ -83,7 +83,7 @@
     - name: Fetch result files from VM
       fetch:
         src: "{{ results_path }}/{{ test_item[1].name | replace('.py', '') }}/{{ application_name }}_{{ test_item[0] }}_{{ test_item[1].name | replace('.py', '') }}.json"
-        dest: "{{ local_results_path }}/{{ test_item[1].name | replace('.py', '') }}/"
+        dest: "{{ local_results_path }}/vm_results/{{ test_item[1].name | replace('.py', '') }}/"
         flat: yes
       loop: "{{ opt_levels | product(tests) | list }}"
       loop_control:

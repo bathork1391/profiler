@@ -1,27 +1,27 @@
 [
     {
         "binary": "trisolv_3.wasm (wasmer)",
-        "internal_time": 0.182,
-        "external_time": 0.47446703910827637
+        "internal_time": 0.291,
+        "external_time": 0.9447944164276123
     },
     {
         "binary": "trisolv_3.wasm (wasmtime)",
-        "internal_time": 0.049,
-        "external_time": 0.39338040351867676
+        "internal_time": 0.065,
+        "external_time": 0.4980924129486084
     },
     {
         "binary": "trisolv_3.wasm (wavm)",
-        "internal_time": 0.006,
-        "external_time": 0.3138399124145508
+        "internal_time": 0.288,
+        "external_time": 0.6975111961364746
     },
     {
         "binary": "trisolv_3.wasm (iwasm)",
-        "internal_time": 0.111,
-        "external_time": 0.40973615646362305
+        "internal_time": 0.143,
+        "external_time": 0.5574965476989746
     },
     {
         "binary": "trisolv_3_native (native)",
-        "internal_time": 0.015,
-        "external_time": 0.347304105758667
+        "internal_time": 0.009,
+        "external_time": 0.44151973724365234
     }
 ]

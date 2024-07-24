@@ -100,10 +100,10 @@ def collect_vm_results(application_name, opt_levels, vm_tests, results):
             test_name = test["name"]
             test_name_without_py = test_name.replace('.py', '')
             try:
-                # Define the local path to which the file will be fetched
-                local_result_file_path = f"{LOCAL_RESULTS_PATH}/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
-                if os.path.exists(local_result_file_path):
-                    test_results = read_json_file(local_result_file_path)
+                # Define the new path to which the VM result files are fetched
+                vm_result_file_path = f"{LOCAL_RESULTS_PATH}/vm_results/{test_name_without_py}/{application_name}_{opt_level}_{test_name_without_py}.json"
+                if os.path.exists(vm_result_file_path):
+                    test_results = read_json_file(vm_result_file_path)
                     results[level_key][f"{test_name}_vm"] = test_results
                 else:
                     results[level_key][f"{test_name}_vm"] = {"error": "Result file not found"}

@@ -1,0 +1,122 @@
+{
+    "application": "trisolv",
+    "profiling_results": {
+        "optimization_level_3": {
+            "times.py_local": {
+                "trisolv_native": 0.010921701999905054,
+                "trisolv_wasmer": 0.07358818099964992,
+                "trisolv_wasmtime": 0.014489138000499224,
+                "trisolv_wavm": 0.23329657399881398,
+                "trisolv_iwasm": 0.07497195199903217
+            },
+            "times.py_vm": {
+                "trisolv_native": 0.014151557348668575,
+                "trisolv_wasmer": 0.14136037323623896,
+                "trisolv_wasmtime": 0.021227886900305748,
+                "trisolv_wavm": 0.0035247541964054108,
+                "trisolv_iwasm": 0.10382784157991409
+            },
+            "rss.py_vm": {
+                "native": {
+                    "sum_rss": 1248.0,
+                    "avg_rss": 1248.0,
+                    "max_rss": 1248.0,
+                    "total_time": 0.0007989406585693359,
+                    "rss_per_time": 1562068.454789615,
+                    "avg_rss_per_time": 1562068.454789615
+                },
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 65768.0,
+                        "avg_rss": 21922.666666666668,
+                        "max_rss": 33988.0,
+                        "total_time": 0.10115742683410645,
+                        "rss_per_time": 650154.9323497177,
+                        "avg_rss_per_time": 216718.31078323926
+                    },
+                    "wasmtime": {
+                        "sum_rss": 536.0,
+                        "avg_rss": 536.0,
+                        "max_rss": 536.0,
+                        "total_time": 0.0009038448333740234,
+                        "rss_per_time": 593022.1429701926,
+                        "avg_rss_per_time": 593022.1429701926
+                    },
+                    "iwasm": {
+                        "sum_rss": 90812.0,
+                        "avg_rss": 30270.666666666668,
+                        "max_rss": 45764.0,
+                        "total_time": 0.10127782821655273,
+                        "rss_per_time": 896662.1974340263,
+                        "avg_rss_per_time": 298887.3991446754
+                    }
+                }
+            },
+            "doc_times.py_vm": [
+                {
+                    "binary": "trisolv_3.wasm (wasmer)",
+                    "internal_time": 0.263,
+                    "external_time": 0.5981137752532959
+                },
+                {
+                    "binary": "trisolv_3.wasm (wasmtime)",
+                    "internal_time": 0.043,
+                    "external_time": 0.37065601348876953
+                },
+                {
+                    "binary": "trisolv_3.wasm (wavm)",
+                    "internal_time": 0.008,
+                    "external_time": 0.36770153045654297
+                },
+                {
+                    "binary": "trisolv_3.wasm (iwasm)",
+                    "internal_time": 0.118,
+                    "external_time": 0.47554469108581543
+                },
+                {
+                    "binary": "trisolv_3_native (native)",
+                    "internal_time": 0.013,
+                    "external_time": 0.34888386726379395
+                }
+            ],
+            "doc_rss.py_vm": {
+                "native": null,
+                "wasm": {
+                    "wasmer": {
+                        "sum_rss": 134180,
+                        "avg_rss": 33545.0,
+                        "max_rss": 68840,
+                        "total_time": 0.2146313190460205,
+                        "rss_rate": 625165.0532475626,
+                        "avg_rss_rate": 156291.26331189065
+                    },
+                    "wasmtime": {
+                        "sum_rss": 2856,
+                        "avg_rss": 2856.0,
+                        "max_rss": 2856,
+                        "total_time": 0.05475020408630371,
+                        "rss_rate": 52164.1891142184,
+                        "avg_rss_rate": 52164.1891142184
+                    },
+                    "wavm": {
+                        "sum_rss": 988,
+                        "avg_rss": 988.0,
+                        "max_rss": 988,
+                        "total_time": 0.054227590560913086,
+                        "rss_rate": 18219.50763034905,
+                        "avg_rss_rate": 18219.50763034905
+                    },
+                    "iwasm": {
+                        "sum_rss": 92536,
+                        "avg_rss": 30845.333333333332,
+                        "max_rss": 47196,
+                        "total_time": 0.15930581092834473,
+                        "rss_rate": 580870.2109530858,
+                        "avg_rss_rate": 193623.40365102858
+                    }
+                }
+            }
+        }
+    },
+    "total_time": 25.07134699821472
+}
